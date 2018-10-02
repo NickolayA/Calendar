@@ -24,33 +24,106 @@ class App extends Component {
   onAddEvent = (
     year,
     month,
-    index,
+    dayInMonthNumber,
     eventMessage,
     useTime,
-    startTime,
-    endTime
+    eventStartTime,
+    eventEndTime
   ) => {
-    console.log("Add Event");
-    console.log(year, month, index, eventMessage, useTime, startTime, endTime);
+    console.log(
+      year,
+      month,
+      dayInMonthNumber,
+      eventMessage,
+      useTime,
+      eventStartTime,
+      eventEndTime
+    );
+    const events = this.state.events;
+    const index = `${year}${month}`;
+    if (!(index in events)) {
+      events[index] = [];
+      events[index][dayInMonthNumber - 1] = {};
+    }
+
+    if (!useTime) {
+      if (!("notUsingTime" in events[index][dayInMonthNumber - 1])) {
+        events[index][dayInMonthNumber - 1]["notUsingTime"] = [eventMessage];
+      } else {
+        events[index][dayInMonthNumber - 1]["notUsingTime"].push(eventMessage);
+      }
+    } else {
+      if (
+        !("eventStartTime" in events[index][dayInMonthNumber - 1]) &&
+        !eventEndTime
+      ) {
+        console.log(eventStartTime, "Yes", { eventStartTime: [eventMessage] });
+
+        events[index][dayInMonthNumber - 1]["eventStartTime"] = {};
+        events[index][dayInMonthNumber - 1]["eventStartTime"][
+          eventStartTime
+        ] = [eventMessage];
+      } else if (
+        "eventStartTime" in events[index][dayInMonthNumber - 1] &&
+        !eventEndTime
+      ) {
+        if (
+          !(
+            eventStartTime in
+            events[index][dayInMonthNumber - 1]["eventStartTime"]
+          )
+        ) {
+          events[index][dayInMonthNumber - 1]["eventStartTime"][
+            eventStartTime
+          ] = [eventMessage];
+        } else {
+          events[index][dayInMonthNumber - 1]["eventStartTime"][
+            eventStartTime
+          ].push(eventMessage);
+        }
+      } else if (
+        eventStartTime &&
+        eventEndTime &&
+        !("rangeTime" in events[index][dayInMonthNumber - 1])
+      ) {
+        events[index][dayInMonthNumber - 1]["rangeTime"] = {
+          eventStartTime: [{ eventEndTime: [eventMessage] }]
+        };
+      } else if (
+        eventStartTime &&
+        eventEndTime &&
+        "rangeTime" in events[index][dayInMonthNumber - 1]
+      ) {
+        if (
+          !(eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"])
+        )
+          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {
+            eventEndTime: [eventMessage]
+          };
+        else if (
+          eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]
+        ) {
+          if (
+            !(
+              eventEndTime in
+              events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime]
+            )
+          ) {
+            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+              eventEndTime
+            ] = [eventMessage];
+          } else {
+            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+              eventEndTime
+            ].push(eventEndTime);
+          }
+        }
+      }
+    }
+
     this.setState({
-      events: { a: 232, month: month }
+      events
     });
-    // console.log(year, month, index, eventMessage, useTime, startTime, endTime);
-    // console.log(this.state.events);
-    // this.setState(prevState => {
-    //   const dateIndex = `${year}${month}`;
-    //   const events = prevState.events;
-    //   if (dateIndex in events) {
-    //     var eventsAtCurrentDate = [...events[dateIndex]];
-    //     eventsAtCurrentDate[index] = 100;
-    //     events[dateIndex] = eventsAtCurrentDate;
-    //   } else {
-    //     events[dateIndex] = [];
-    //   }
-    //   return {
-    //     events
-    //   };
-    // });
   };
 
   render() {

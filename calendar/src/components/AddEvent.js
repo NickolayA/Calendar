@@ -8,21 +8,23 @@ class AddEvent extends React.Component {
     this.state = {
       eventMessage: "",
       date: new Date(props.year, props.month, props.dayInMonthNumber + 1),
-      eventStart: "00:00",
-      eventEnd: "00:00",
-      useTime: false
+      eventStart: "",
+      eventEnd: "",
+      useTime: false,
+      validationTime: true
     };
   }
 
   onChange = e => {
-    if (e.target.name === "eventStart") {
-      if (e.target.value > this.state.eventEnd) {
-        return;
-      }
-    } else if (e.target.name === "eventEnd") {
-      if (e.target.value < this.state.eventStart) {
-        return;
-      }
+    if (e.target.name === "eventStart" && this.state.eventEnd) {
+      console.log(e.target.value);
+      //   if (e.target.value > this.state.eventEnd) {
+      //     return;
+      //   }
+    } else if (e.target.name === "eventEnd" && this.state.eventStart) {
+      //   if (e.target.value < this.state.eventStart) {
+      //     return;
+      //   }
     } else if (e.target.name === "useTime") {
       this.setState({
         useTime: e.target.checked
@@ -34,26 +36,33 @@ class AddEvent extends React.Component {
       });
       return;
     }
+
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(e.target.value);
   };
 
   onSubmit = e => {
     e.preventDefault();
 
     const { eventMessage, date, eventStart, eventEnd, useTime } = this.state;
-    //console.log(eventMessage, date, eventStart, eventEnd, useTime);
-    //date.setDate(date.getDate() - 1);
+    const { year, month, dayInMonthNumber } = this.props;
+
+    if (!eventMessage) return;
+
+    if (eventStart && eventEnd && eventStart > eventEnd) {
+      this.setState({
+        validationTime: false
+      });
+    } else {
+      this.setState({
+        validationTime: true
+      });
+    }
 
     if (
       date.toDateString() ===
-      new Date(
-        this.props.year,
-        this.props.month,
-        this.props.dayInMonthNumber + 1
-      ).toDateString()
+      new Date(year, month, dayInMonthNumber + 1).toDateString()
     ) {
       date.setDate(date.getDate() - 1);
       this.props.onAddEvent(
@@ -65,6 +74,7 @@ class AddEvent extends React.Component {
         eventStart,
         eventEnd
       );
+      date.setDate(date.getDate() + 1);
     } else {
       this.props.onAddEvent(
         date.getFullYear(),
@@ -76,7 +86,12 @@ class AddEvent extends React.Component {
         eventEnd
       );
     }
+
+    this.setState({
+      eventMessage: ""
+    });
   };
+
   render() {
     const { year, month, dayInMonthNumber } = this.props;
 
@@ -126,6 +141,9 @@ class AddEvent extends React.Component {
             value={this.state.date.toISOString().substr(0, 10)}
           />
 
+          {!this.state.validationTime ? (
+            <h1>Start event time greater than End event time</h1>
+          ) : null}
           <button>AddEvent</button>
         </form>
       </div>
