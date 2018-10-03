@@ -10,8 +10,10 @@ import {
   addMonthToDate
 } from "../helpers/datetime";
 
+import { getEventsState } from "../helpers/state";
+
 const Month = props => {
-  const { year, month, date } = props;
+  const { year, month, date, eventsState } = props;
   const numberOfDaysInMonth = getNumberOfDaysInMonth(year, month);
   const firstDayOfWeekOfMonth = getFirstDayOfWeekOfMonth(year, month);
   const lastDayOfWeekOfMonth = getLastDayOfWeekOfMonth(year, month);
@@ -31,19 +33,31 @@ const Month = props => {
     i <= numberOfDaysInPreviousMonth;
     i++
   ) {
+    const yearOfPreviousMonth = previousMonthDate.getFullYear();
+    const monthOfPreviousMonth = previousMonthDate.getMonth();
+    //const index = `${yearOfPreviousMonth}${monthOfPreviousMonth}`;
+    const eventsStateCopy = getEventsState(
+      eventsState,
+      yearOfPreviousMonth,
+      monthOfPreviousMonth,
+      i
+    );
     days.push(
       <DayCell
         className="notCurrent"
         key={"m" + (month - 1) + i}
-        year={previousMonthDate.getFullYear()}
-        month={previousMonthDate.getMonth()}
+        year={yearOfPreviousMonth}
+        month={monthOfPreviousMonth}
         dayInMonthNumber={i}
+        eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
       />
     );
   }
 
   for (let i = 1; i <= numberOfDaysInMonth; i++) {
+    //const index = `${year}${month}`;
+    const eventsStateCopy = getEventsState(eventsState, year, month, i);
     days.push(
       <DayCell
         className="current"
@@ -51,6 +65,7 @@ const Month = props => {
         year={year}
         month={month}
         dayInMonthNumber={i}
+        eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
       />
     );
@@ -61,13 +76,23 @@ const Month = props => {
   }
 
   for (let i = 1; i <= 7 - lastDayOfWeekOfMonth; i++) {
+    const yearOfNextMonth = nextMonthDate.getFullYear();
+    const monthOfNextMonth = nextMonthDate.getMonth();
+    //const index = `${yearOfNextMonth}${monthOfNextMonth}`;
+    const eventsStateCopy = getEventsState(
+      eventsState,
+      yearOfNextMonth,
+      monthOfNextMonth,
+      i
+    );
     days.push(
       <DayCell
         className="notCurrent"
         key={"m" + (month + 1) + i}
-        year={nextMonthDate.getFullYear()}
-        month={nextMonthDate.getMonth()}
+        year={yearOfNextMonth}
+        month={monthOfNextMonth}
         dayInMonthNumber={i}
+        eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
       />
     );
