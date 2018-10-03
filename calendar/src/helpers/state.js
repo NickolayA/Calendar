@@ -160,3 +160,7 @@ export const addNewEventToCalendarState = (events, year,
 
     return events;
 }
+
+export const prepareEventsForShowing = (eventsState) => {
+    console.log(eventsState)
+}

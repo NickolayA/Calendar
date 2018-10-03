@@ -11,8 +11,8 @@ export default class ShowTypeChecker extends React.Component {
         <div className="control">
           <div className="select is-primary">
             <select value={defaultType} onChange={this.onChange}>
-              <option value="month">Month</option>
-              <option value="day">Day</option>
+              <option value="without">Without Events</option>
+              <option value="with">With Events</option>
             </select>
           </div>
         </div>

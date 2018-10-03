@@ -1,7 +1,5 @@
 import React from "react";
 
-import { addMonthToDate } from "../helpers/datetime";
-
 class AddEvent extends React.Component {
   constructor(props) {
     super(props);
@@ -93,11 +91,10 @@ class AddEvent extends React.Component {
     this.setState({
       eventMessage: ""
     });
+    this.props.toggleModal();
   };
 
   render() {
-    const { year, month, dayInMonthNumber } = this.props;
-
     return (
       <div className="addEvent">
         <form onSubmit={this.onSubmit}>
@@ -108,6 +105,7 @@ class AddEvent extends React.Component {
             value={this.state.eventMessage}
           />
 
+          <label htmlFor="useTime">Use time</label>
           <input
             type="checkbox"
             name="useTime"
@@ -116,6 +114,7 @@ class AddEvent extends React.Component {
             value={this.state.useTime}
           />
 
+          <label htmlFor="annualEvent">Check as annual event</label>
           <input
             type="checkbox"
             name="annualEvent"

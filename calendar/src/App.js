@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Month from "./components/Month";
 import ChangeMonth from "./components/ChangeMonth";
-import ChangeDay from "./components/ChangeDay";
 import ShowTypeChecker from "./components/ShowTypeChecker";
 
 import { addMonthToDate, subtractMonthFromDate } from "./helpers/datetime";
@@ -13,7 +12,7 @@ class App extends Component {
     this.state = {
       currentDate: new Date(Date.now()),
       events: {},
-      typeView: "month"
+      typeView: "without"
     };
   }
 
@@ -70,31 +69,21 @@ class App extends Component {
           defaultType={this.state.typeView}
           onSelectNewViewType={this.onSelectNewViewType}
         />
-
-        {this.state.typeView === "month" ? (
-          <React.Fragment>
-            <ChangeMonth
-              onMonthBackward={this.onMonthBackward}
-              onMonthForward={this.onMonthForward}
-              currentDate={this.state.currentDate}
-            />
-            <table className="table is-bordered is-fullwidth">
-              <Month
-                year={this.state.currentDate.getFullYear()}
-                month={this.state.currentDate.getMonth()}
-                date={this.state.currentDate}
-                onAddEvent={this.onAddEvent}
-                eventsState={this.state.events}
-              />
-            </table>
-          </React.Fragment>
-        ) : null}
-
-        {this.state.typeView === "day" ? (
-          <React.Fragment>
-            <ChangeDay />
-          </React.Fragment>
-        ) : null}
+        <ChangeMonth
+          onMonthBackward={this.onMonthBackward}
+          onMonthForward={this.onMonthForward}
+          currentDate={this.state.currentDate}
+        />
+        <table className="table is-bordered is-fullwidth">
+          <Month
+            year={this.state.currentDate.getFullYear()}
+            month={this.state.currentDate.getMonth()}
+            date={this.state.currentDate}
+            onAddEvent={this.onAddEvent}
+            eventsState={this.state.events}
+            typeView={this.state.typeView}
+          />
+        </table>
       </div>
     );
   }

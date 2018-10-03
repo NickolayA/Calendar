@@ -13,7 +13,7 @@ import {
 import { getEventsState } from "../helpers/state";
 
 const Month = props => {
-  const { year, month, date, eventsState } = props;
+  const { year, month, date, eventsState, typeView } = props;
   const numberOfDaysInMonth = getNumberOfDaysInMonth(year, month);
   const firstDayOfWeekOfMonth = getFirstDayOfWeekOfMonth(year, month);
   const lastDayOfWeekOfMonth = getLastDayOfWeekOfMonth(year, month);
@@ -51,6 +51,7 @@ const Month = props => {
         dayInMonthNumber={i}
         eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
+        typeView={typeView}
       />
     );
   }
@@ -67,6 +68,7 @@ const Month = props => {
         dayInMonthNumber={i}
         eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
+        typeView={typeView}
       />
     );
     if (days.length === 7) {
@@ -94,6 +96,7 @@ const Month = props => {
         dayInMonthNumber={i}
         eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
+        typeView={typeView}
       />
     );
     if (days.length === 7) {
