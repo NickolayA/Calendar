@@ -51,7 +51,50 @@ class App extends Component {
 
     if (annualEvent) {
       console.log("Annual event");
-    } else if (!useTime) {
+    } else if (
+      eventStartTime &&
+      eventEndTime &&
+      !("rangeTime" in events[index][dayInMonthNumber - 1])
+    ) {
+      events[index][dayInMonthNumber - 1]["rangeTime"] = {};
+      events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
+      events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+        eventEndTime
+      ] = [eventMessage];
+    } else if (
+      eventStartTime &&
+      eventEndTime &&
+      "rangeTime" in events[index][dayInMonthNumber - 1]
+    ) {
+      if (
+        !(eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"])
+      ) {
+        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
+        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+          eventEndTime
+        ] = [eventMessage];
+      } else if (
+        eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]
+      ) {
+        if (
+          !(
+            eventEndTime in
+            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime]
+          )
+        ) {
+          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+            eventEndTime
+          ] = {};
+          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+            eventEndTime
+          ] = [eventMessage];
+        } else {
+          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+            eventEndTime
+          ].push(eventMessage);
+        }
+      }
+    } else if (!useTime || !eventStartTime) {
       if (!("notUsingTime" in events[index][dayInMonthNumber - 1])) {
         events[index][dayInMonthNumber - 1]["notUsingTime"] = [eventMessage];
       } else {
@@ -85,49 +128,6 @@ class App extends Component {
           events[index][dayInMonthNumber - 1]["eventStartTime"][
             eventStartTime
           ].push(eventMessage);
-        }
-      } else if (
-        eventStartTime &&
-        eventEndTime &&
-        !("rangeTime" in events[index][dayInMonthNumber - 1])
-      ) {
-        events[index][dayInMonthNumber - 1]["rangeTime"] = {};
-        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
-        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-          eventEndTime
-        ] = [eventMessage];
-      } else if (
-        eventStartTime &&
-        eventEndTime &&
-        "rangeTime" in events[index][dayInMonthNumber - 1]
-      ) {
-        if (
-          !(eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"])
-        ) {
-          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
-          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-            eventEndTime
-          ] = [eventMessage];
-        } else if (
-          eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]
-        ) {
-          if (
-            !(
-              eventEndTime in
-              events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime]
-            )
-          ) {
-            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-              eventEndTime
-            ] = {};
-            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-              eventEndTime
-            ] = [eventMessage];
-          } else {
-            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-              eventEndTime
-            ].push(eventMessage);
-          }
         }
       }
     }
