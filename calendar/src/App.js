@@ -52,8 +52,24 @@ class App extends Component {
     }
 
     if (annualEvent) {
-      // if (!(annualEvent in events)) {
-      // }
+      //const indexAnnual = index + `${dayInMonthNumber - 1}`;
+      if (!("annualEvents" in events)) {
+        events["annualEvents"] = {};
+        events["annualEvents"][year] = [];
+        events["annualEvents"][year][dayInMonthNumber - 1] = [];
+        events["annualEvents"][year][dayInMonthNumber - 1].push(eventMessage);
+      } else if (!(year in events["annualEvents"])) {
+        events["annualEvents"][year] = [];
+        events["annualEvents"][year][dayInMonthNumber - 1] = [];
+        events["annualEvents"][year][dayInMonthNumber - 1].push(eventMessage);
+      } else if (
+        events["annualEvents"][year][dayInMonthNumber - 1] === undefined
+      ) {
+        events["annualEvents"][year][dayInMonthNumber - 1] = [];
+        events["annualEvents"][year][dayInMonthNumber - 1].push(eventMessage);
+      } else {
+        events["annualEvents"][year][dayInMonthNumber - 1].push(eventMessage);
+      }
     } else if (
       eventStartTime &&
       eventEndTime &&
