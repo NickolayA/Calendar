@@ -11,23 +11,16 @@ class AddEvent extends React.Component {
       eventStart: "",
       eventEnd: "",
       useTime: false,
+      annualEvent: false,
       validationTime: true
     };
   }
 
   onChange = e => {
-    if (e.target.name === "eventStart" && this.state.eventEnd) {
-      console.log(e.target.value);
-      //   if (e.target.value > this.state.eventEnd) {
-      //     return;
-      //   }
-    } else if (e.target.name === "eventEnd" && this.state.eventStart) {
-      //   if (e.target.value < this.state.eventStart) {
-      //     return;
-      //   }
-    } else if (e.target.name === "useTime") {
+    if (e.target.name === "useTime" || e.target.name === "annualEvent") {
+      console.log("annual evnet");
       this.setState({
-        useTime: e.target.checked
+        [e.target.name]: e.target.checked
       });
       return;
     } else if (e.target.name === "date") {
@@ -45,7 +38,14 @@ class AddEvent extends React.Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { eventMessage, date, eventStart, eventEnd, useTime } = this.state;
+    const {
+      eventMessage,
+      date,
+      eventStart,
+      eventEnd,
+      useTime,
+      annualEvent
+    } = this.state;
     const { year, month, dayInMonthNumber } = this.props;
 
     if (!eventMessage) return;
@@ -54,6 +54,7 @@ class AddEvent extends React.Component {
       this.setState({
         validationTime: false
       });
+      return;
     } else {
       this.setState({
         validationTime: true
@@ -67,23 +68,25 @@ class AddEvent extends React.Component {
       date.setDate(date.getDate() - 1);
       this.props.onAddEvent(
         date.getFullYear(),
-        date.getMonth() + 1,
+        date.getMonth(),
         date.getDate(),
         eventMessage,
         useTime,
         eventStart,
-        eventEnd
+        eventEnd,
+        annualEvent
       );
       date.setDate(date.getDate() + 1);
     } else {
       this.props.onAddEvent(
         date.getFullYear(),
-        date.getMonth() + 1,
+        date.getMonth(),
         date.getDate(),
         eventMessage,
         useTime,
         eventStart,
-        eventEnd
+        eventEnd,
+        annualEvent
       );
     }
 
@@ -111,6 +114,14 @@ class AddEvent extends React.Component {
             id="useTime"
             onChange={this.onChange}
             value={this.state.useTime}
+          />
+
+          <input
+            type="checkbox"
+            name="annualEvent"
+            id="annualEvent"
+            onChange={this.onChange}
+            value={this.state.annualEvent}
           />
 
           {this.state.useTime ? (
