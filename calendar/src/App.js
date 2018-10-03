@@ -47,10 +47,13 @@ class App extends Component {
     if (!(index in events)) {
       events[index] = [];
       events[index][dayInMonthNumber - 1] = {};
+    } else if (!(dayInMonthNumber - 1 in events[index])) {
+      events[index][dayInMonthNumber - 1] = {};
     }
 
     if (annualEvent) {
-      console.log("Annual event");
+      // if (!(annualEvent in events)) {
+      // }
     } else if (
       eventStartTime &&
       eventEndTime &&
@@ -135,7 +138,7 @@ class App extends Component {
     this.setState({
       events
     });
-  };
+  }; // end onAddEvent
 
   render() {
     return (
@@ -151,6 +154,7 @@ class App extends Component {
           month={this.state.currentDate.getMonth()}
           date={this.state.currentDate}
           onAddEvent={this.onAddEvent}
+          eventsState={this.state.events}
         />
       </div>
     );
