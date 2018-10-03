@@ -28,7 +28,8 @@ class App extends Component {
     eventMessage,
     useTime,
     eventStartTime,
-    eventEndTime
+    eventEndTime,
+    annualEvent
   ) => {
     console.log(
       year,
@@ -37,16 +38,20 @@ class App extends Component {
       eventMessage,
       useTime,
       eventStartTime,
-      eventEndTime
+      eventEndTime,
+      annualEvent
     );
     const events = this.state.events;
     const index = `${year}${month}`;
+
     if (!(index in events)) {
       events[index] = [];
       events[index][dayInMonthNumber - 1] = {};
     }
 
-    if (!useTime) {
+    if (annualEvent) {
+      console.log("Annual event");
+    } else if (!useTime) {
       if (!("notUsingTime" in events[index][dayInMonthNumber - 1])) {
         events[index][dayInMonthNumber - 1]["notUsingTime"] = [eventMessage];
       } else {
@@ -86,9 +91,11 @@ class App extends Component {
         eventEndTime &&
         !("rangeTime" in events[index][dayInMonthNumber - 1])
       ) {
-        events[index][dayInMonthNumber - 1]["rangeTime"] = {
-          eventStartTime: [{ eventEndTime: [eventMessage] }]
-        };
+        events[index][dayInMonthNumber - 1]["rangeTime"] = {};
+        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
+        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+          eventEndTime
+        ] = [eventMessage];
       } else if (
         eventStartTime &&
         eventEndTime &&
@@ -96,11 +103,12 @@ class App extends Component {
       ) {
         if (
           !(eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"])
-        )
-          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {
-            eventEndTime: [eventMessage]
-          };
-        else if (
+        ) {
+          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
+          events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+            eventEndTime
+          ] = [eventMessage];
+        } else if (
           eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]
         ) {
           if (
@@ -111,11 +119,14 @@ class App extends Component {
           ) {
             events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
               eventEndTime
+            ] = {};
+            events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+              eventEndTime
             ] = [eventMessage];
           } else {
             events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
               eventEndTime
-            ].push(eventEndTime);
+            ].push(eventMessage);
           }
         }
       }
