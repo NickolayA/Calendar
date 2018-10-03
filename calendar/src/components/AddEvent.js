@@ -10,13 +10,14 @@ class AddEvent extends React.Component {
       eventEnd: "",
       useTime: false,
       annualEvent: false,
-      validationTime: true
+      validationTime: true,
+      validationMessage: true,
+      eventMessageAdditionSuccess: false
     };
   }
 
   onChange = e => {
     if (e.target.name === "useTime" || e.target.name === "annualEvent") {
-      console.log("annual evnet");
       this.setState({
         [e.target.name]: e.target.checked
       });
@@ -46,7 +47,15 @@ class AddEvent extends React.Component {
     } = this.state;
     const { year, month, dayInMonthNumber } = this.props;
 
-    if (!eventMessage) return;
+    if (!eventMessage) {
+      this.setState({
+        validationMessage: false,
+        eventMessageAdditionSuccess: false
+      });
+      return;
+    } else {
+      this.setState({ validationMessage: true });
+    }
 
     if (eventStart && eventEnd && eventStart > eventEnd) {
       this.setState({
@@ -91,56 +100,99 @@ class AddEvent extends React.Component {
     this.setState({
       eventMessage: ""
     });
-    this.props.toggleModal();
+
+    this.setState({
+      validationMessage: true,
+      validationTime: true,
+      eventMessageAdditionSuccess: true
+    });
   };
 
   render() {
     return (
       <div className="addEvent">
         <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            name="eventMessage"
-            onChange={this.onChange}
-            value={this.state.eventMessage}
-          />
+          <div className="field">
+            <label htmlFor="eventMessage" className="label">
+              Enter event name
+            </label>
+            <div className="control">
+              <input
+                type="text"
+                name="eventMessage"
+                id="eventMessage"
+                onChange={this.onChange}
+                value={this.state.eventMessage}
+                placeholder="Event name"
+              />
+            </div>
 
-          <label htmlFor="useTime">Use time</label>
-          <input
-            type="checkbox"
-            name="useTime"
-            id="useTime"
-            onChange={this.onChange}
-            value={this.state.useTime}
-          />
+            {!this.state.validationMessage ? (
+              <p className="help is-danger">Enter event message</p>
+            ) : null}
+          </div>
 
-          <label htmlFor="annualEvent">Check as annual event</label>
-          <input
-            type="checkbox"
-            name="annualEvent"
-            id="annualEvent"
-            onChange={this.onChange}
-            value={this.state.annualEvent}
-          />
+          <div className="field">
+            <div className="control">
+              <label htmlFor="useTime" className="checkbox">
+                <input
+                  type="checkbox"
+                  name="useTime"
+                  id="useTime"
+                  onChange={this.onChange}
+                  value={this.state.useTime}
+                />
+                Use time
+              </label>
+            </div>
+          </div>
+
+          <div className="field">
+            <div className="control">
+              <label htmlFor="annualEvent" className="checkbox">
+                <input
+                  type="checkbox"
+                  name="annualEvent"
+                  id="annualEvent"
+                  onChange={this.onChange}
+                  value={this.state.annualEvent}
+                />
+                Select as annual event
+              </label>
+            </div>
+          </div>
 
           {this.state.useTime ? (
             <React.Fragment>
-              <label htmlFor="eventStart">Start</label>
-              <input
-                type="time"
-                id="eventStart"
-                name="eventStart"
-                onChange={this.onChange}
-                value={this.state.eventStart}
-              />
-              <label htmlFor="eventEnd">End</label>
-              <input
-                type="time"
-                id="eventEnd"
-                name="eventEnd"
-                onChange={this.onChange}
-                value={this.state.eventEnd}
-              />
+              <div className="field">
+                <label htmlFor="eventStart" className="label is-white">
+                  Start event time
+                </label>
+                <div className="control">
+                  <input
+                    type="time"
+                    id="eventStart"
+                    name="eventStart"
+                    onChange={this.onChange}
+                    value={this.state.eventStart}
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <div className="control">
+                  <label htmlFor="eventEnd" className="label">
+                    End event time
+                  </label>
+                  <input
+                    type="time"
+                    id="eventEnd"
+                    name="eventEnd"
+                    onChange={this.onChange}
+                    value={this.state.eventEnd}
+                  />
+                </div>
+              </div>
             </React.Fragment>
           ) : null}
 
@@ -152,9 +204,20 @@ class AddEvent extends React.Component {
           />
 
           {!this.state.validationTime ? (
-            <h1>Start event time greater than End event time</h1>
+            <p className="help is-danger">
+              Start event time greater than End event time
+            </p>
           ) : null}
-          <button>AddEvent</button>
+
+          <div className="field">
+            <div className="control">
+              <button className="button is-primary">Add event</button>
+            </div>
+          </div>
+
+          {this.state.eventMessageAdditionSuccess ? (
+            <p className="help is-success">Event is added</p>
+          ) : null}
         </form>
       </div>
     );

@@ -70,90 +70,91 @@ export const addNewEventToCalendarState = (events, year,
                 eventMessage
             );
         }
-    }
-    if (!(index in events)) {
-        events[index] = [];
-        events[index][dayInMonthNumber - 1] = {};
-    } else if (!(dayInMonthNumber - 1 in events[index])) {
-        events[index][dayInMonthNumber - 1] = {};
-    }
+    } else {
+        if (!(index in events)) {
+            events[index] = [];
+            events[index][dayInMonthNumber - 1] = {};
+        } else if (!(dayInMonthNumber - 1 in events[index])) {
+            events[index][dayInMonthNumber - 1] = {};
+        }
 
-    if (
-        eventStartTime &&
-        eventEndTime &&
-        !("rangeTime" in events[index][dayInMonthNumber - 1])
-    ) {
-        events[index][dayInMonthNumber - 1]["rangeTime"] = {};
-        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
-        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-            eventEndTime
-        ] = [eventMessage];
-    } else if (
-        eventStartTime &&
-        eventEndTime &&
-        "rangeTime" in events[index][dayInMonthNumber - 1]
-    ) {
         if (
-            !(eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"])
+            eventStartTime &&
+            eventEndTime &&
+            !("rangeTime" in events[index][dayInMonthNumber - 1])
         ) {
+            events[index][dayInMonthNumber - 1]["rangeTime"] = {};
             events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
             events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
                 eventEndTime
             ] = [eventMessage];
         } else if (
-            eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]
+            eventStartTime &&
+            eventEndTime &&
+            "rangeTime" in events[index][dayInMonthNumber - 1]
         ) {
             if (
-                !(
-                    eventEndTime in
-                    events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime]
-                )
+                !(eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"])
             ) {
-                events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-                    eventEndTime
-                ] = {};
+                events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime] = {};
                 events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
                     eventEndTime
                 ] = [eventMessage];
-            } else {
-                events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
-                    eventEndTime
-                ].push(eventMessage);
+            } else if (
+                eventStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]
+            ) {
+                if (
+                    !(
+                        eventEndTime in
+                        events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime]
+                    )
+                ) {
+                    events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+                        eventEndTime
+                    ] = {};
+                    events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+                        eventEndTime
+                    ] = [eventMessage];
+                } else {
+                    events[index][dayInMonthNumber - 1]["rangeTime"][eventStartTime][
+                        eventEndTime
+                    ].push(eventMessage);
+                }
             }
-        }
-    } else if (!useTime || !eventStartTime) {
-        if (!("notUsingTime" in events[index][dayInMonthNumber - 1])) {
-            events[index][dayInMonthNumber - 1]["notUsingTime"] = [eventMessage];
+        } else if (!useTime || !eventStartTime) {
+            if (!("notUsingTime" in events[index][dayInMonthNumber - 1])) {
+                events[index][dayInMonthNumber - 1]["notUsingTime"] = [eventMessage];
+            } else {
+                events[index][dayInMonthNumber - 1]["notUsingTime"].push(eventMessage);
+            }
         } else {
-            events[index][dayInMonthNumber - 1]["notUsingTime"].push(eventMessage);
-        }
-    } else {
-        if (
-            !("eventStartTime" in events[index][dayInMonthNumber - 1]) &&
-            !eventEndTime
-        ) {
-
-            events[index][dayInMonthNumber - 1]["eventStartTime"] = {};
-            events[index][dayInMonthNumber - 1]["eventStartTime"][
-                eventStartTime
-            ] = [eventMessage];
-        } else if (
-            "eventStartTime" in events[index][dayInMonthNumber - 1] &&
-            !eventEndTime
-        ) {
             if (
-                !(
-                    eventStartTime in
-                    events[index][dayInMonthNumber - 1]["eventStartTime"]
-                )
+                !("eventStartTime" in events[index][dayInMonthNumber - 1]) &&
+                !eventEndTime
             ) {
+
+                events[index][dayInMonthNumber - 1]["eventStartTime"] = {};
                 events[index][dayInMonthNumber - 1]["eventStartTime"][
                     eventStartTime
                 ] = [eventMessage];
-            } else {
-                events[index][dayInMonthNumber - 1]["eventStartTime"][
-                    eventStartTime
-                ].push(eventMessage);
+            } else if (
+                "eventStartTime" in events[index][dayInMonthNumber - 1] &&
+                !eventEndTime
+            ) {
+                if (
+                    !(
+                        eventStartTime in
+                        events[index][dayInMonthNumber - 1]["eventStartTime"]
+                    )
+                ) {
+                    events[index][dayInMonthNumber - 1]["eventStartTime"][
+                        eventStartTime
+                    ] = [eventMessage];
+                } else {
+                    events[index][dayInMonthNumber - 1]["eventStartTime"][
+                        eventStartTime
+                    ].push(eventMessage);
+                }
             }
         }
     }
@@ -163,4 +164,11 @@ export const addNewEventToCalendarState = (events, year,
 
 export const prepareEventsForShowing = (eventsState) => {
     console.log(eventsState)
+    if ("annualEvents" in eventsState) {
+
+    }
+
+    if ("currentEvents" in eventsState) {
+
+    }
 }
