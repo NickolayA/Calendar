@@ -102,7 +102,7 @@ const Month = props => {
     }
   }
 
-  return <div>{weeks}</div>;
+  return <tbody>{weeks}</tbody>;
 };
 
 export default Month;

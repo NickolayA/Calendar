@@ -3,10 +3,7 @@ import React from "react";
 const Events = props => {
   const { eventsState } = props;
 
-  if (eventsState) {
-    console.log(eventsState, "Events", Boolean(eventsState));
-  }
-
+  console.log(eventsState);
   return (
     <div className="events">
       <span>Events</span>

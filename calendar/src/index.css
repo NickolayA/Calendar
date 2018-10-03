@@ -1,20 +1,30 @@
-body {
+@import '../node_modules/bulma/css/bulma.min.css';
+
+/* body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-}
+} */
 
+/* 
 .current {
   border: 1px solid red;
-}
+} */
 
 .notCurrent {
   color: grey;
 }
 
-.week {
+/* .week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-auto-flow: dense;
   grid-gap: 2px 10px;
+} */
+
+td.dayCell {
+  text-align: left;
+  vertical-align: top;
+  min-height: 40px;
+  height: 100px;
 }

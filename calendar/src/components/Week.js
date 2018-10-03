@@ -2,7 +2,7 @@ import React from "react";
 import DayCell from "./DayCell";
 
 const Week = props => {
-  return <div className="week"> {props.children} </div>;
+  return <tr className="week"> {props.children} </tr>;
 };
 
 export default Week;
