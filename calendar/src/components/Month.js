@@ -70,7 +70,7 @@ const Month = props => {
       />
     );
     if (days.length === 7) {
-      weeks.push(<Week>{days.slice(0)}</Week>);
+      weeks.push(<Week key={weeks.length}>{days.slice(0)}</Week>);
       days.length = 0;
     }
   }
@@ -97,7 +97,7 @@ const Month = props => {
       />
     );
     if (days.length === 7) {
-      weeks.push(<Week>{days.slice(0)}</Week>);
+      weeks.push(<Week key={weeks.length}>{days.slice(0)}</Week>);
       days.length = 0;
     }
   }
