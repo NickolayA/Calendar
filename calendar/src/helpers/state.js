@@ -16,17 +16,23 @@ export const getEventsState = (eventsState, year, month, dayInMonthNumber) => {
         }
     }
 
-    try {
-        resultEvents["currentEvents"] = eventsState[index][dayInMonthNumber];
-    } catch (e) {
-
-    } finally {
-        if (resultEvents["currentEvents"] !== undefined || resultEvents["annualEvents"] !== undefined) {
-            return resultEvents;
-        } else {
-            return null;
+    if (index in eventsState) {
+        if (dayInMonthNumber in eventsState[index]) {
+            resultEvents["currentEvents"] = eventsState[index][dayInMonthNumber];
         }
     }
+    // try {
+    //     resultEvents["currentEvents"] = eventsState[index][dayInMonthNumber];
+    // } catch (e) {
+
+    // } finally {
+    if (resultEvents["currentEvents"] !== undefined || resultEvents["annualEvents"] !== undefined) {
+        console.log(resultEvents, "Result events")
+        return resultEvents;
+    } else {
+        return null;
+    }
+    //}
 }
 
 export const addNewEventToCalendarState = (events, year,

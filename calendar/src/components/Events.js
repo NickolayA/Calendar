@@ -36,6 +36,11 @@ class Events extends React.Component {
     let commonTimes = [];
     if (eventsState) {
       if ("currentEvents" in eventsState) {
+        console.log(
+          eventsState,
+          eventsState["currentEvents"],
+          "extractEventsWithTime"
+        );
         if (
           "eventStartTime" in eventsState["currentEvents"] &&
           "rangeTime" in eventsState["currentEvents"]
@@ -156,8 +161,12 @@ class Events extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="events"> {this.extractEventsWithTime()} </div>{" "}
-        <div className="events"> {this.extractEventsWithoutTime()} </div>{" "}
+        <div className="ui inverted segment">
+          <div className="ui inverted relaxed divided list">
+            {this.extractEventsWithTime()}
+            {this.extractEventsWithoutTime()}
+          </div>
+        </div>
       </React.Fragment>
     );
   }

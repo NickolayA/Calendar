@@ -4,21 +4,21 @@ const Event = props => {
   const { eventMessage, eventType, startTime, endTime } = props;
   if (startTime && endTime === undefined) {
     return (
-      <div>
+      <p className="is-small">
         {startTime}-{eventMessage}
-      </div>
+      </p>
     );
   } else if (startTime && endTime) {
     return (
-      <div>
+      <p className="is-small">
         {startTime}-{endTime}-{eventMessage}
-      </div>
+      </p>
     );
   } else {
     return (
-      <div>
+      <p className="is-small">
         {eventMessage}-{eventType}
-      </div>
+      </p>
     );
   }
 };

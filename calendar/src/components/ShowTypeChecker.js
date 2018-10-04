@@ -12,7 +12,7 @@ export default class ShowTypeChecker extends React.Component {
           <div className="select is-primary">
             <select value={defaultType} onChange={this.onChange}>
               <option value="without">Without Events</option>
-              <option value="with">With Events</option>
+              <option value="with">Show Events</option>
             </select>
           </div>
         </div>

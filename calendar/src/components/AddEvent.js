@@ -201,6 +201,11 @@ class AddEvent extends React.Component {
               </div>
             </React.Fragment>
           ) : null}
+          {!this.state.validationTime ? (
+            <p className="help is-danger">
+              Start event time greater than End event time
+            </p>
+          ) : null}
 
           <input
             type="date"
@@ -208,12 +213,6 @@ class AddEvent extends React.Component {
             onChange={this.onChange}
             value={this.state.date.toISOString().substr(0, 10)}
           />
-
-          {!this.state.validationTime ? (
-            <p className="help is-danger">
-              Start event time greater than End event time
-            </p>
-          ) : null}
 
           <div className="field">
             <div className="control">
