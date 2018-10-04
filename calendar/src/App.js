@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Month from "./components/Month";
 import ChangeMonth from "./components/ChangeMonth";
 import ShowTypeChecker from "./components/ShowTypeChecker";
+import SelectDate from "./components/SelectDate";
 
 import { addMonthToDate, subtractMonthFromDate } from "./helpers/datetime";
 import { addNewEventToCalendarState } from "./helpers/state";
@@ -16,6 +17,12 @@ class App extends Component {
       eventsIntersectionIsDetected: false
     };
   }
+
+  onChangeDate = e => {
+    this.setState({
+      currentDate: e.target.valueAsDate
+    });
+  };
 
   onSelectNewViewType = newViewtype => {
     this.setState({
@@ -82,6 +89,10 @@ class App extends Component {
           onMonthBackward={this.onMonthBackward}
           onMonthForward={this.onMonthForward}
           currentDate={this.state.currentDate}
+        />
+        <SelectDate
+          date={this.state.currentDate}
+          onChangeDate={this.onChangeDate}
         />
         <table className="table is-bordered is-narrow is-fullwidth">
           <Month

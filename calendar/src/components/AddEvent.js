@@ -181,6 +181,7 @@ class AddEvent extends React.Component {
                     name="eventStart"
                     onChange={this.onChange}
                     value={this.state.eventStart}
+                    required
                   />
                 </div>
               </div>
@@ -212,6 +213,7 @@ class AddEvent extends React.Component {
             name="date"
             onChange={this.onChange}
             value={this.state.date.toISOString().substr(0, 10)}
+            required
           />
 
           <div className="field">
