@@ -12,12 +12,13 @@ class AddEvent extends React.Component {
       annualEvent: false,
       validationTime: true,
       validationMessage: true,
-      eventMessageAdditionSuccess: false
+      eventMessageAdditionSuccess: false,
+      addIntersectedEvent: false
     };
   }
 
   onChange = e => {
-    if (e.target.name === "useTime" || e.target.name === "annualEvent") {
+    if (e.target.type === "checkbox") {
       this.setState({
         [e.target.name]: e.target.checked
       });
@@ -43,7 +44,8 @@ class AddEvent extends React.Component {
       eventStart,
       eventEnd,
       useTime,
-      annualEvent
+      annualEvent,
+      addIntersectedEvent
     } = this.state;
     const { year, month, dayInMonthNumber } = this.props;
 
@@ -81,7 +83,8 @@ class AddEvent extends React.Component {
         useTime,
         eventStart,
         eventEnd,
-        annualEvent
+        annualEvent,
+        addIntersectedEvent
       );
       date.setDate(date.getDate() + 1);
     } else {
@@ -93,13 +96,16 @@ class AddEvent extends React.Component {
         useTime,
         eventStart,
         eventEnd,
-        annualEvent
+        annualEvent,
+        addIntersectedEvent
       );
     }
 
-    this.setState({
-      eventMessage: ""
-    });
+    // if (this.props.intersectionIsDetected) {
+    //   this.setState({
+    //     eventMessage: ""
+    //   });
+    // }
 
     this.setState({
       validationMessage: true,
@@ -217,6 +223,28 @@ class AddEvent extends React.Component {
 
           {this.state.eventMessageAdditionSuccess ? (
             <p className="help is-success">Event is added</p>
+          ) : null}
+
+          {this.props.intersectionIsDetected ? (
+            <React.Fragment>
+              <p className="help is-danger">
+                There is an event at the same time.
+              </p>
+              <div className="field">
+                <div className="control">
+                  <label htmlFor="addIntersectedEvent" className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="addIntersectedEvent"
+                      id="addIntersectedEvent"
+                      onChange={this.onChange}
+                      value={this.state.addIntersectedEvent}
+                    />
+                    Add anyway?
+                  </label>
+                </div>
+              </div>
+            </React.Fragment>
           ) : null}
         </form>
       </div>

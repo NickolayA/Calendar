@@ -13,7 +13,14 @@ import {
 import { getEventsState } from "../helpers/state";
 
 const Month = props => {
-  const { year, month, date, eventsState, typeView } = props;
+  const {
+    year,
+    month,
+    date,
+    eventsState,
+    typeView,
+    intersectionIsDetected
+  } = props;
   const numberOfDaysInMonth = getNumberOfDaysInMonth(year, month);
   const firstDayOfWeekOfMonth = getFirstDayOfWeekOfMonth(year, month);
   const lastDayOfWeekOfMonth = getLastDayOfWeekOfMonth(year, month);
@@ -35,7 +42,6 @@ const Month = props => {
   ) {
     const yearOfPreviousMonth = previousMonthDate.getFullYear();
     const monthOfPreviousMonth = previousMonthDate.getMonth();
-    //const index = `${yearOfPreviousMonth}${monthOfPreviousMonth}`;
     const eventsStateCopy = getEventsState(
       eventsState,
       yearOfPreviousMonth,
@@ -52,6 +58,7 @@ const Month = props => {
         eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
         typeView={typeView}
+        intersectionIsDetected={intersectionIsDetected}
       />
     );
   }
@@ -69,10 +76,11 @@ const Month = props => {
         eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
         typeView={typeView}
+        intersectionIsDetected={intersectionIsDetected}
       />
     );
     if (days.length === 7) {
-      weeks.push(<Week key={weeks.length}>{days.slice(0)}</Week>);
+      weeks.push(<Week key={weeks.length}> {days.slice(0)} </Week>);
       days.length = 0;
     }
   }
@@ -97,15 +105,16 @@ const Month = props => {
         eventsState={eventsStateCopy}
         onAddEvent={props.onAddEvent}
         typeView={typeView}
+        intersectionIsDetected={intersectionIsDetected}
       />
     );
     if (days.length === 7) {
-      weeks.push(<Week key={weeks.length}>{days.slice(0)}</Week>);
+      weeks.push(<Week key={weeks.length}> {days.slice(0)} </Week>);
       days.length = 0;
     }
   }
 
-  return <tbody>{weeks}</tbody>;
+  return <tbody> {weeks} </tbody>;
 };
 
 export default Month;

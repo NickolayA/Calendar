@@ -15,7 +15,11 @@ const Event = props => {
       </div>
     );
   } else {
-    return <div>{eventMessage}</div>;
+    return (
+      <div>
+        {eventMessage}-{eventType}
+      </div>
+    );
   }
 };
 

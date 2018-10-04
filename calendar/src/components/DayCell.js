@@ -26,7 +26,8 @@ export default class DayCell extends React.Component {
       month,
       dayInMonthNumber,
       onAddEvent,
-      typeView
+      typeView,
+      intersectionIsDetected
     } = this.props;
 
     let className;
@@ -39,7 +40,12 @@ export default class DayCell extends React.Component {
       <td className={className} onClick={this.toggleModalByDay}>
         <p>{dayInMonthNumber}</p>
         {typeView === "with" ? <Events eventsState={eventsState} /> : null}
-        <button onClick={this.toggleModal}>Add Event</button>
+        <button
+          className="button is-small is-fullwidth"
+          onClick={this.toggleModalByDay}
+        >
+          Add Event
+        </button>
 
         {this.state.showModal ? (
           <React.Fragment>
@@ -52,6 +58,7 @@ export default class DayCell extends React.Component {
                   dayInMonthNumber={dayInMonthNumber}
                   onAddEvent={onAddEvent}
                   toggleModal={this.toggleModal}
+                  intersectionIsDetected={intersectionIsDetected}
                 />
               </div>
               <button

@@ -1,5 +1,5 @@
 export const getEventsState = (eventsState, year, month, dayInMonthNumber) => {
-
+    console.log(eventsState)
     const index = `${year}${month}`;
     const resultEvents = {};
     dayInMonthNumber--;
@@ -36,8 +36,116 @@ export const addNewEventToCalendarState = (events, year,
     useTime,
     eventStartTime,
     eventEndTime,
-    annualEvent) => {
+    annualEvent,
+    onEventsIntersectionDetection,
+    addIntersectedEvent) => {
     const index = `${year}${month}`;
+
+    // check intersections
+    if (eventStartTime && !eventEndTime) {
+        try {
+            if ("eventStartTime" in events[index][dayInMonthNumber - 1]) {
+                for (let startTimeEvent in events[index][dayInMonthNumber - 1]["eventStartTime"]) {
+                    if (eventStartTime === startTimeEvent) {
+                        if (!addIntersectedEvent) {
+                            onEventsIntersectionDetection("There is event at the same time", true);
+                            return events;
+                        } else {
+                            onEventsIntersectionDetection("We can save", false)
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+
+        }
+
+        try {
+            // check intersections
+            if ("rangeTime" in events[index][dayInMonthNumber - 1]) {
+                for (let rangeStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]) {
+                    if (rangeStartTime === eventStartTime) {
+                        if (!addIntersectedEvent) {
+                            onEventsIntersectionDetection("There is event at the same time", true);
+                            return events;
+                        } else {
+                            onEventsIntersectionDetection("We can save", false)
+                        }
+                    } else if (rangeStartTime < eventStartTime) {
+                        for (let rangeEndTime in events[index][dayInMonthNumber - 1]["rangeTime"][rangeStartTime]) {
+                            if (eventStartTime < rangeEndTime) {
+                                if (!addIntersectedEvent) {
+                                    onEventsIntersectionDetection("There is event at the same time", true);
+                                    return events;
+                                } else {
+                                    onEventsIntersectionDetection("We can save", false)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {}
+    } else if (eventStartTime && eventEndTime) {
+        try {
+            if ("rangeTime" in events[index][dayInMonthNumber - 1]) {
+                for (let rangeStartTime in events[index][dayInMonthNumber - 1]["rangeTime"]) {
+                    if (rangeStartTime === eventStartTime) {
+                        if (!addIntersectedEvent) {
+                            onEventsIntersectionDetection("There is event at the same time", true);
+                            return events;
+                        } else {
+                            onEventsIntersectionDetection("We can save", false)
+                        }
+                    } else if (rangeStartTime < eventStartTime) {
+                        for (let rangeEndTime in events[index][dayInMonthNumber - 1]["rangeTime"][rangeStartTime]) {
+                            if (eventStartTime < rangeEndTime) {
+                                if (!addIntersectedEvent) {
+                                    onEventsIntersectionDetection("There is event at the same time", true);
+                                    return events;
+                                } else {
+                                    onEventsIntersectionDetection("We can save", false)
+                                }
+                            }
+                        }
+                    } else {
+                        for (let rangeEndTime in events[index][dayInMonthNumber - 1]["rangeTime"][rangeStartTime]) {
+                            if (eventEndTime > rangeEndTime) {
+                                if (!addIntersectedEvent) {
+                                    onEventsIntersectionDetection("There is event at the same time", true);
+                                    return events;
+                                } else {
+                                    onEventsIntersectionDetection("We can save", false)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {}
+        try {
+            if ("eventStartTime" in events[index][dayInMonthNumber - 1]) {
+                for (let startTimeEvent in events[index][dayInMonthNumber - 1]["eventStartTime"]) {
+                    if (eventStartTime === startTimeEvent) {
+                        if (!addIntersectedEvent) {
+                            onEventsIntersectionDetection("There is event at the same time", true);
+                            return events;
+                        } else {
+                            onEventsIntersectionDetection("We can save", false)
+                        }
+                    } else if (eventStartTime < startTimeEvent && startTimeEvent < eventEndTime) {
+                        if (!addIntersectedEvent) {
+                            onEventsIntersectionDetection("There is event at the same time", true);
+                            return events;
+                        } else {
+                            onEventsIntersectionDetection("We can save", false)
+                        }
+                    }
+                }
+            }
+        } catch (e) {}
+    }
+
 
     if (annualEvent) {
         //const indexAnnual = index + `${dayInMonthNumber - 1}`;
@@ -141,16 +249,25 @@ export const addNewEventToCalendarState = (events, year,
                 "eventStartTime" in events[index][dayInMonthNumber - 1] &&
                 !eventEndTime
             ) {
+                // check intersection of time
                 if (
                     !(
                         eventStartTime in
                         events[index][dayInMonthNumber - 1]["eventStartTime"]
                     )
                 ) {
+                    console.log("sdf")
                     events[index][dayInMonthNumber - 1]["eventStartTime"][
                         eventStartTime
                     ] = [eventMessage];
+
+
                 } else {
+                    console.log("Event with the same startTime exists are you sure")
+
+
+
+
                     events[index][dayInMonthNumber - 1]["eventStartTime"][
                         eventStartTime
                     ].push(eventMessage);
@@ -160,15 +277,4 @@ export const addNewEventToCalendarState = (events, year,
     }
 
     return events;
-}
-
-export const prepareEventsForShowing = (eventsState) => {
-    console.log(eventsState)
-    if ("annualEvents" in eventsState) {
-
-    }
-
-    if ("currentEvents" in eventsState) {
-
-    }
 }

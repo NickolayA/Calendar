@@ -121,7 +121,7 @@ class Events extends React.Component {
             }
           }
           return eventsComponentsWithTime;
-        } else {
+        } else if ("rangeTime" in eventsState["currentEvents"]) {
           let rangeTimeEvents = eventsState["currentEvents"]["rangeTime"];
 
           const orderedRangeTimeEvents = {};
@@ -154,7 +154,12 @@ class Events extends React.Component {
   };
 
   render() {
-    return <div className="events">{this.extractEventsWithTime()}</div>;
+    return (
+      <React.Fragment>
+        <div className="events"> {this.extractEventsWithTime()} </div>{" "}
+        <div className="events"> {this.extractEventsWithoutTime()} </div>{" "}
+      </React.Fragment>
+    );
   }
 }
 

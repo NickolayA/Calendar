@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       currentDate: new Date(Date.now()),
       events: {},
-      typeView: "without"
+      typeView: "without",
+      eventsIntersectionIsDetected: false
     };
   }
 
@@ -34,6 +35,13 @@ class App extends Component {
     });
   };
 
+  onEventsIntersectionDetection = (message, changeMessage) => {
+    this.setState({
+      eventsIntersectionIsDetected: changeMessage
+    });
+    console.log(message, changeMessage);
+  };
+
   onAddEvent = (
     year,
     month,
@@ -42,7 +50,8 @@ class App extends Component {
     useTime,
     eventStartTime,
     eventEndTime,
-    annualEvent
+    annualEvent,
+    addIntersectedEvent
   ) => {
     const events = addNewEventToCalendarState(
       this.state.events,
@@ -53,7 +62,9 @@ class App extends Component {
       useTime,
       eventStartTime,
       eventEndTime,
-      annualEvent
+      annualEvent,
+      this.onEventsIntersectionDetection,
+      addIntersectedEvent
     );
 
     this.setState({
@@ -64,7 +75,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Calendar</h1>
+        <h1> Calendar </h1>
         <ShowTypeChecker
           defaultType={this.state.typeView}
           onSelectNewViewType={this.onSelectNewViewType}
@@ -82,6 +93,7 @@ class App extends Component {
             onAddEvent={this.onAddEvent}
             eventsState={this.state.events}
             typeView={this.state.typeView}
+            intersectionIsDetected={this.state.eventsIntersectionIsDetected}
           />
         </table>
       </div>
