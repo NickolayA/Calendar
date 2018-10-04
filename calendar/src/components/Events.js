@@ -52,7 +52,7 @@ class Events extends React.Component {
           commonTimes = commonTimes.concat(Object.keys(rangeTimeEvents));
 
           commonTimes = [...new Set(commonTimes)];
-          console.log(commonEventObject);
+
           for (let commonTime of commonTimes) {
             commonEventObject[commonTime] = [];
 
@@ -161,12 +161,10 @@ class Events extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="ui inverted segment">
-          <div className="ui inverted relaxed divided list">
-            {this.extractEventsWithTime()}
-            {this.extractEventsWithoutTime()}
-          </div>
-        </div>
+        <nav className="panel">
+          {this.extractEventsWithTime()}
+          {this.extractEventsWithoutTime()}
+        </nav>
       </React.Fragment>
     );
   }

@@ -1,13 +1,23 @@
 import React from "react";
 
+import { monthNumberToMonthName } from "../helpers/datetime";
+
 const ChangeMonth = props => {
   return (
     <React.Fragment>
-      <button className="minusMonth" onClick={props.onMonthBackward}>
+      <button
+        className="minusMonth button is-rounded"
+        onClick={props.onMonthBackward}
+      >
         Backward
       </button>
-      <span>{props.currentDate.toDateString()}</span>
-      <button className="plusMonth" onClick={props.onMonthForward}>
+      <span>{`${monthNumberToMonthName(
+        props.currentDate
+      )} ${props.currentDate.getFullYear()}`}</span>
+      <button
+        className="plusMonth button is-rounded"
+        onClick={props.onMonthForward}
+      >
         Forward
       </button>
     </React.Fragment>

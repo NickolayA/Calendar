@@ -1,5 +1,4 @@
 export const getEventsState = (eventsState, year, month, dayInMonthNumber) => {
-    console.log(eventsState)
     const index = `${year}${month}`;
     const resultEvents = {};
     dayInMonthNumber--;
@@ -27,7 +26,6 @@ export const getEventsState = (eventsState, year, month, dayInMonthNumber) => {
 
     // } finally {
     if (resultEvents["currentEvents"] !== undefined || resultEvents["annualEvents"] !== undefined) {
-        console.log(resultEvents, "Result events")
         return resultEvents;
     } else {
         return null;

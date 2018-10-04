@@ -1,5 +1,4 @@
 @import '../node_modules/bulma/css/bulma.min.css';
-
 /* body {
   margin: 0;
   padding: 0;
@@ -35,4 +34,44 @@ td.dayCell {
 
 .label {
   color: white;
+}
+
+.table {
+  table-layout: fixed;
+}
+
+
+/* .eventsList {
+  margin: 0;
+  padding: 0;
+  display: block;
+}*/
+
+/* .eventsList li {
+
+  font-size: 5px;
+} */
+
+.event {
+  font-size: 12px;
+  padding: 0 0 0 2px;
+}
+
+
+
+.annualEvents {
+  background-color: #F44336;
+  color: black;
+}
+
+.notUsingTime {
+  background-color: #CDDC39;
+}
+
+.onlyStartTime {
+  background-color: #00B0FF;
+}
+
+.rangeTime {
+  background-color: #CE93D8;
 }

@@ -39,3 +39,11 @@ export const toDateTimeLocal = (date) => {
     return YYYY + '-' + MM + '-' + DD + 'T' +
         HH + ':' + II + ':' + SS;
 }
+
+export const monthNumberToMonthName = (date) => {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    return monthNames[date.getMonth()];
+
+}

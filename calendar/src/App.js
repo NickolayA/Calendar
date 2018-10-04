@@ -39,7 +39,6 @@ class App extends Component {
     this.setState({
       eventsIntersectionIsDetected: changeMessage
     });
-    console.log(message, changeMessage);
   };
 
   onAddEvent = (
@@ -85,7 +84,7 @@ class App extends Component {
           onMonthForward={this.onMonthForward}
           currentDate={this.state.currentDate}
         />
-        <table className="table is-bordered is-fullwidth">
+        <table className="table is-bordered is-narrow is-fullwidth">
           <Month
             year={this.state.currentDate.getFullYear()}
             month={this.state.currentDate.getMonth()}
