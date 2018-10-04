@@ -18,7 +18,10 @@ const Event = props => {
   } else {
     if (eventType === "annualEvents") {
       return (
-        <a className="panel-block event annualEvents is-danger">
+        <a
+          className="panel-block event annualEvents is-danger"
+          title="annual event"
+        >
           {eventMessage}
         </a>
       );

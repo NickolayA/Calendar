@@ -74,7 +74,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1> Calendar </h1>
         <ShowTypeChecker
           defaultType={this.state.typeView}
           onSelectNewViewType={this.onSelectNewViewType}
