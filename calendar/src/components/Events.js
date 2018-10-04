@@ -61,6 +61,15 @@ class Events extends React.Component {
             }
           }
 
+          const orderedCommonEventObject = {};
+          Object.keys(commonEventObject)
+            .sort()
+            .forEach(key => {
+              orderedCommonEventObject[key] = commonEventObject[key];
+            });
+
+          commonEventObject = orderedCommonEventObject;
+
           for (let commonTime in commonEventObject) {
             for (let eventMessage of commonEventObject[commonTime]) {
               if (typeof eventMessage === "string") {
@@ -89,7 +98,17 @@ class Events extends React.Component {
           }
           return eventsComponentsWithTime;
         } else if ("eventStartTime" in eventsState["currentEvents"]) {
-          const eventStartTime = eventsState["currentEvents"]["eventStartTime"];
+          let eventStartTime = eventsState["currentEvents"]["eventStartTime"];
+
+          const orderedEventStartTime = {};
+          Object.keys(eventStartTime)
+            .sort()
+            .forEach(key => {
+              orderedEventStartTime[key] = eventStartTime[key];
+            });
+
+          eventStartTime = orderedEventStartTime;
+
           for (let time in eventStartTime) {
             for (let eventMessage of eventStartTime[time]) {
               eventsComponentsWithTime.push(
@@ -103,7 +122,17 @@ class Events extends React.Component {
           }
           return eventsComponentsWithTime;
         } else {
-          const rangeTimeEvents = eventsState["currentEvents"]["rangeTime"];
+          let rangeTimeEvents = eventsState["currentEvents"]["rangeTime"];
+
+          const orderedRangeTimeEvents = {};
+          Object.keys(rangeTimeEvents)
+            .sort()
+            .forEach(key => {
+              orderedRangeTimeEvents[key] = rangeTimeEvents[key];
+            });
+
+          rangeTimeEvents = orderedRangeTimeEvents;
+
           for (let startTime in rangeTimeEvents) {
             for (let endTime in rangeTimeEvents[startTime]) {
               for (let eventMessage of rangeTimeEvents[startTime][endTime]) {
