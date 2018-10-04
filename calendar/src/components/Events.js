@@ -36,11 +36,11 @@ class Events extends React.Component {
     let commonTimes = [];
     if (eventsState) {
       if ("currentEvents" in eventsState) {
-        console.log(
-          eventsState,
-          eventsState["currentEvents"],
-          "extractEventsWithTime"
-        );
+        // console.log(
+        //   eventsState,
+        //   eventsState["currentEvents"],
+        //   "extractEventsWithTime"
+        // );
         if (
           "eventStartTime" in eventsState["currentEvents"] &&
           "rangeTime" in eventsState["currentEvents"]
@@ -80,6 +80,7 @@ class Events extends React.Component {
               if (typeof eventMessage === "string") {
                 eventsComponentsWithTime.push(
                   <Event
+                    key={commonTime + eventsComponentsWithTime.length}
                     eventMessage={eventMessage}
                     eventType={"eventStartTime"}
                     startTime={commonTime}
@@ -90,6 +91,7 @@ class Events extends React.Component {
                   for (let eventMessageRange of eventMessage[endTime]) {
                     eventsComponentsWithTime.push(
                       <Event
+                        key={commonTime + eventsComponentsWithTime.length}
                         eventMessage={eventMessageRange}
                         eventType={"rangeTime"}
                         startTime={commonTime}
@@ -118,6 +120,7 @@ class Events extends React.Component {
             for (let eventMessage of eventStartTime[time]) {
               eventsComponentsWithTime.push(
                 <Event
+                  key={time + eventsComponentsWithTime.length}
                   eventMessage={eventMessage}
                   eventType={"eventStartTime"}
                   startTime={time}
@@ -143,6 +146,7 @@ class Events extends React.Component {
               for (let eventMessage of rangeTimeEvents[startTime][endTime]) {
                 eventsComponentsWithTime.push(
                   <Event
+                    key={startTime + eventsComponentsWithTime.length}
                     eventMessage={eventMessage}
                     eventType={"eventStartTime"}
                     startTime={startTime}

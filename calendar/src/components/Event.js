@@ -2,17 +2,17 @@ import React from "react";
 
 const Event = props => {
   const { eventMessage, eventType, startTime, endTime } = props;
-  console.log(eventType, "Event TYpe");
+
   if (startTime && endTime === undefined) {
     return (
       <a className="panel-block event onlyStartTime">
-        {startTime}-{eventMessage}
+        {startTime}: {eventMessage}
       </a>
     );
   } else if (startTime && endTime) {
     return (
       <a className="panel-block event rangeTime">
-        {startTime}-{endTime}-{eventMessage}
+        {startTime}-{endTime}: {eventMessage}
       </a>
     );
   } else {
