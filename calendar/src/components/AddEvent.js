@@ -18,21 +18,15 @@ class AddEvent extends React.Component {
   }
 
   onChange = e => {
+    const newState = {};
     if (e.target.type === "checkbox") {
-      this.setState({
-        [e.target.name]: e.target.checked
-      });
-      return;
+      newState[e.target.name] = e.target.checked;
     } else if (e.target.name === "date") {
-      this.setState({
-        [e.target.name]: e.target.valueAsDate
-      });
-      return;
+      newState[e.target.name] = e.target.valueAsDate;
+    } else {
+      newState[e.target.name] = e.target.value;
     }
-
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    this.setState(newState);
   };
 
   onSubmit = e => {
