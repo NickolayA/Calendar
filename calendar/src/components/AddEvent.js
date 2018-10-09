@@ -20,34 +20,6 @@ import {
 } from "../actions/actions";
 
 class AddEvent extends React.Component {
-  constructor(props) {
-    super(props);
-
-    // this.state = {
-    //   date: new Date(props.year, props.month, props.dayInMonthNumber + 1),
-    //   eventStart: "",
-    //   eventEnd: "",
-    //   useTime: false,
-    //   annualEvent: false,
-    //   validationTime: true,
-    //   validationMessage: true,
-    //   eventMessageAdditionSuccess: false,
-    //   addIntersectedEvent: false
-    // };
-  }
-
-  // onChange = e => {
-  //   const newState = {};
-  //   if (e.target.type === "checkbox") {
-  //     newState[e.target.name] = e.target.checked;
-  //   } else if (e.target.name === "date") {
-  //     newState[e.target.name] = e.target.valueAsDate;
-  //   } else {
-  //     newState[e.target.name] = e.target.value;
-  //   }
-  //   this.setState(newState);
-  // };
-
   onSubmit = e => {
     e.preventDefault();
 

@@ -14,10 +14,8 @@ import {
   addMonthToDate
 } from "../helpers/datetime";
 
-import { getEventsState } from "../helpers/state";
-
 const Month = props => {
-  const { year, month, eventsState, typeView, intersectionIsDetected } = props;
+  const { year, month, eventsState, typeView } = props;
 
   const date = props.currentDate;
 
@@ -42,12 +40,7 @@ const Month = props => {
   ) {
     const yearOfPreviousMonth = previousMonthDate.getFullYear();
     const monthOfPreviousMonth = previousMonthDate.getMonth();
-    const eventsStateCopy = getEventsState(
-      eventsState,
-      yearOfPreviousMonth,
-      monthOfPreviousMonth,
-      i
-    );
+
     const dayCellCode = `${yearOfPreviousMonth}${monthOfPreviousMonth}${i}`;
     props.addInitialStateCell(dayCellCode);
     days.push(
@@ -57,18 +50,12 @@ const Month = props => {
         year={yearOfPreviousMonth}
         month={monthOfPreviousMonth}
         dayInMonthNumber={i}
-        eventsState={eventsStateCopy}
-        onAddEvent={props.onAddEvent}
         typeView={typeView}
-        intersectionIsDetected={intersectionIsDetected}
       />
     );
   }
 
   for (let i = 1; i <= numberOfDaysInMonth; i++) {
-    //const index = `${year}${month}`;
-    const eventsStateCopy = getEventsState(eventsState, year, month, i);
-
     const dayCellCode = `${year}${month}${i}`;
     props.addInitialStateCell(dayCellCode);
     days.push(
@@ -78,14 +65,11 @@ const Month = props => {
         year={year}
         month={month}
         dayInMonthNumber={i}
-        eventsState={eventsStateCopy}
-        onAddEvent={props.onAddEvent}
         typeView={typeView}
-        intersectionIsDetected={intersectionIsDetected}
       />
     );
     if (days.length === 7) {
-      weeks.push(<Week key={weeks.length}> {days.slice(0)} </Week>);
+      weeks.push(<Week key={weeks.length}>{days.slice(0)}</Week>);
       days.length = 0;
     }
   }
@@ -93,12 +77,7 @@ const Month = props => {
   for (let i = 1; i <= 7 - lastDayOfWeekOfMonth; i++) {
     const yearOfNextMonth = nextMonthDate.getFullYear();
     const monthOfNextMonth = nextMonthDate.getMonth();
-    const eventsStateCopy = getEventsState(
-      eventsState,
-      yearOfNextMonth,
-      monthOfNextMonth,
-      i
-    );
+
     const dayCellCode = `${yearOfNextMonth}${monthOfNextMonth}${i}`;
     props.addInitialStateCell(dayCellCode);
     days.push(
@@ -108,10 +87,7 @@ const Month = props => {
         year={yearOfNextMonth}
         month={monthOfNextMonth}
         dayInMonthNumber={i}
-        eventsState={eventsStateCopy}
-        onAddEvent={props.onAddEvent}
         typeView={typeView}
-        intersectionIsDetected={intersectionIsDetected}
       />
     );
     if (days.length === 7) {
@@ -119,7 +95,7 @@ const Month = props => {
       days.length = 0;
     }
   }
-  return <tbody> {weeks} </tbody>;
+  return <tbody>{weeks}</tbody>;
 };
 
 const mapStateToProps = state => {

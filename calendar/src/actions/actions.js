@@ -9,9 +9,7 @@ import {
   SELECT_USE_TIME,
   SELECT_ANNUAL_EVENT,
   INVERT_TIME_IS_VALID,
-  INVERT_MESSAGE_IS_VALID,
-  SET_MESSAGE_ADDITION_SUCCESS,
-  INVERT_ADD_INTERSECTED_EVENT
+  INVERT_MESSAGE_IS_VALID
 } from "../actions/types";
 
 import {
@@ -21,6 +19,8 @@ import {
 } from "../actions/types";
 
 import { ADD_EVENT } from "../actions/types";
+
+import { CHANGE_VIEW_TYPE } from "../actions/types";
 
 // eventReducer
 export const addEvent = (
@@ -102,17 +102,6 @@ export const changeValidationMessage = newValidationMessage => ({
   newValidationMessage
 });
 
-// eventMessage: "",
-//       date: new Date(props.year, props.month, props.dayInMonthNumber + 1),
-//       eventStart: "",
-//       eventEnd: "",
-//       useTime: false,
-//       annualEvent: false,
-//       validationTime: true,
-//       validationMessage: true,
-//       eventMessageAdditionSuccess: false,
-//       addIntersectedEvent: false
-
 // dayCellReducer
 
 export const toggleModal = dayCellCode => ({
@@ -123,4 +112,10 @@ export const toggleModal = dayCellCode => ({
 export const addInitialStateCell = dayCellCode => ({
   type: ADD_INITIAL_CELL_STATE,
   dayCellCode
+});
+
+// typeViewReducer
+export const changeViewType = newType => ({
+  type: CHANGE_VIEW_TYPE,
+  newType
 });

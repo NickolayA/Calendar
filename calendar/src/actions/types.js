@@ -28,5 +28,5 @@ export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 export const TOGGLE_MODAL_BY_DAY = 'TOGGLE_MODAL_BY_DAY';
 export const ADD_INITIAL_CELL_STATE = 'ADD_INITIAL_CELL_STATE';
 
-// showModal: false,
-//       doNotToggle: false
+// typeViewReducer
+export const CHANGE_VIEW_TYPE = 'CHANGE_VIEW_TYPE';

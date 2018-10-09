@@ -13,10 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: new Date(Date.now()),
-      events: {},
-      typeView: "without",
-      eventsIntersectionIsDetected: false
+      typeView: "without"
     };
   }
 
@@ -25,42 +22,6 @@ class App extends Component {
       typeView: newViewtype
     });
   };
-
-  // onEventsIntersectionDetection = (message, changeMessage) => {
-  //   this.setState({
-  //     eventsIntersectionIsDetected: changeMessage
-  //   });
-  // };
-
-  // onAddEvent = (
-  //   year,
-  //   month,
-  //   dayInMonthNumber,
-  //   eventMessage,
-  //   useTime,
-  //   eventStartTime,
-  //   eventEndTime,
-  //   annualEvent,
-  //   addIntersectedEvent
-  // ) => {
-  //   const events = addNewEventToCalendarState(
-  //     this.state.events,
-  //     year,
-  //     month,
-  //     dayInMonthNumber,
-  //     eventMessage,
-  //     useTime,
-  //     eventStartTime,
-  //     eventEndTime,
-  //     annualEvent,
-  //     this.props.onEventsIntersectionDetection,
-  //     addIntersectedEvent
-  //   );
-
-  //   this.setState({
-  //     events
-  //   });
-  // }; // end onAddEvent
 
   render() {
     const currentDate = this.props.currentDate;
@@ -78,10 +39,7 @@ class App extends Component {
             year={currentDate.getFullYear()}
             month={currentDate.getMonth()}
             date={currentDate}
-            onAddEvent={this.onAddEvent}
-            eventsState={this.state.events}
             typeView={this.state.typeView}
-            intersectionIsDetected={this.state.eventsIntersectionIsDetected}
           />
         </table>
       </div>

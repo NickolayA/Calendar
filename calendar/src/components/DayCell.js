@@ -4,6 +4,7 @@ import Events from "./Events";
 import { connect } from "react-redux";
 
 import { changeEventDate, toggleModal } from "../actions/actions";
+import { getEventsState } from "../helpers/state";
 
 import {
   TOGGLE_MODAL,
@@ -29,16 +30,20 @@ class DayCell extends React.Component {
   };
 
   render() {
-    //console.log("Day cell", "props", this.props);
     const {
-      eventsState,
       year,
       month,
       dayInMonthNumber,
-      onAddEvent,
       typeView,
       intersectionIsDetected
     } = this.props;
+
+    const eventsState = getEventsState(
+      this.props.events,
+      year,
+      month,
+      dayInMonthNumber
+    );
 
     let className;
     if (eventsState && typeView === "without") {
@@ -66,7 +71,6 @@ class DayCell extends React.Component {
                   year={year}
                   month={month}
                   dayInMonthNumber={dayInMonthNumber}
-                  onAddEvent={onAddEvent}
                   intersectionIsDetected={intersectionIsDetected}
                 />
               </div>
@@ -87,9 +91,11 @@ const mapStateToProps = (state, ownProps) => {
     ownProps.dayInMonthNumber
   }`;
   return {
+    typeView: state.typeViewReducer.typeView,
     showModal: state.dayCellReducer[dayCellCode].showModal,
     doNotToggle: state.dayCellReducer[dayCellCode].doNotToggle,
-    dayCell: state.dayCellReducer[dayCellCode]
+    dayCell: state.dayCellReducer[dayCellCode],
+    events: state.events
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

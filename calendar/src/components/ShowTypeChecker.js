@@ -1,18 +1,18 @@
 import React from "react";
-
-export default class ShowTypeChecker extends React.Component {
-  onChange = e => {
-    this.props.onSelectNewViewType(e.target.value);
-  };
+import { connect } from "react-redux";
+import { changeViewType } from "../actions/actions";
+class ShowTypeChecker extends React.Component {
   render() {
-    const { defaultType } = this.props;
     return (
       <div className="field">
         <div className="control">
           <div className="select is-primary">
-            <select value={defaultType} onChange={this.onChange}>
-              <option value="without">Without Events</option>
-              <option value="with">Show Events</option>
+            <select
+              value={this.props.typeView}
+              onChange={this.props.changeViewType}
+            >
+              <option value="without"> Without Events </option>
+              <option value="with"> Show Events </option>
             </select>
           </div>
         </div>
@@ -20,3 +20,18 @@ export default class ShowTypeChecker extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    typeView: state.typeViewReducer.typeView
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    changeViewType: e => dispatch(changeViewType(e.target.value))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ShowTypeChecker);

@@ -1,8 +1,3 @@
-import {
-  SET_ADD_INTERSECTED_EVENT,
-  RESET_ADD_INTERSECTED_EVENT
-} from "../actions/types";
-
 import store from "../store";
 
 export const getEventsState = (eventsState, year, month, dayInMonthNumber) => {
@@ -71,12 +66,10 @@ export const addNewEventToCalendarState = (
           if (eventStartTime === startTimeEvent) {
             if (!addIntersectedEvent) {
               events["eventIntersectionDetected"] = true;
-              console.log(events, "events");
               return events;
             } else {
               events["eventIntersectionDetected"] = false;
               events["addIntersectedEvent"] = false;
-              console.log("INTERSECTED EVENT ");
             }
           }
         }
@@ -96,7 +89,6 @@ export const addNewEventToCalendarState = (
             } else {
               events["eventIntersectionDetected"] = false;
               events["addIntersectedEvent"] = false;
-              console.log("INTERSECTED EVENT ");
             }
           } else if (rangeStartTime < eventStartTime) {
             for (let rangeEndTime in events[index][dayInMonthNumber - 1][
@@ -109,7 +101,6 @@ export const addNewEventToCalendarState = (
                 } else {
                   events["eventIntersectionDetected"] = false;
                   events["addIntersectedEvent"] = false;
-                  console.log("INTERSECTED EVENT ");
                 }
               }
             }
@@ -130,7 +121,6 @@ export const addNewEventToCalendarState = (
             } else {
               events["eventIntersectionDetected"] = false;
               events["addIntersectedEvent"] = false;
-              console.log("INTERSECTED EVENT ");
             }
           } else if (rangeStartTime < eventStartTime) {
             for (let rangeEndTime in events[index][dayInMonthNumber - 1][
@@ -143,7 +133,6 @@ export const addNewEventToCalendarState = (
                 } else {
                   events["eventIntersectionDetected"] = false;
                   events["addIntersectedEvent"] = false;
-                  console.log("INTERSECTED EVENT ");
                 }
               }
             }
@@ -158,7 +147,6 @@ export const addNewEventToCalendarState = (
                 } else {
                   events["eventIntersectionDetected"] = false;
                   events["addIntersectedEvent"] = false;
-                  console.log("INTERSECTED EVENT ");
                 }
               }
             }
@@ -178,7 +166,6 @@ export const addNewEventToCalendarState = (
             } else {
               events["eventIntersectionDetected"] = false;
               events["addIntersectedEvent"] = false;
-              console.log("INTERSECTED EVENT ");
             }
           } else if (
             eventStartTime < startTimeEvent &&
@@ -190,7 +177,6 @@ export const addNewEventToCalendarState = (
             } else {
               events["eventIntersectionDetected"] = false;
               events["addIntersectedEvent"] = false;
-              console.log("INTERSECTED EVENT ");
             }
           }
         }
