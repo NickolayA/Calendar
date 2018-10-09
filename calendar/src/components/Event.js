@@ -2,22 +2,23 @@ import React from "react";
 
 const Event = props => {
   const { eventMessage, eventType, startTime, endTime } = props;
+  let event;
 
   if (startTime && endTime === undefined) {
-    return (
+    event = (
       <a className="panel-block event onlyStartTime">
         {startTime}: {eventMessage}
       </a>
     );
   } else if (startTime && endTime) {
-    return (
+    event = (
       <a className="panel-block event rangeTime">
-        {startTime}-{endTime}: {eventMessage}
+        {startTime} - {endTime}: {eventMessage}
       </a>
     );
   } else {
     if (eventType === "annualEvents") {
-      return (
+      event = (
         <a
           className="panel-block event annualEvents is-danger"
           title="annual event"
@@ -26,9 +27,13 @@ const Event = props => {
         </a>
       );
     } else {
-      return <a className="panel-block event notUsingTime">{eventMessage}</a>;
+      event = (
+        <a className="panel-block event notUsingTime"> {eventMessage} </a>
+      );
     }
   }
+
+  return event;
 };
 
 export default Event;

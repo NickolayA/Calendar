@@ -166,8 +166,7 @@ class Events extends React.Component {
     return (
       <React.Fragment>
         <nav className="panel">
-          {this.extractEventsWithTime()}
-          {this.extractEventsWithoutTime()}
+          {this.extractEventsWithTime()} {this.extractEventsWithoutTime()}
         </nav>
       </React.Fragment>
     );

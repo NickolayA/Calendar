@@ -7,14 +7,19 @@ const dateReducer = (
   },
   action
 ) => {
-  console.log(action);
   switch (action.type) {
     case CHANGE_DATE:
-      return state;
+      return {
+        currentDate: action.currentDate
+      };
     case MONTH_FORWARD:
-      return { currentDate: addMonthToDate(state.currentDate) };
+      return {
+        currentDate: addMonthToDate(state.currentDate)
+      };
     case MONTH_BACKWARD:
-      return { currentDate: subtractMonthFromDate(state.currentDate) };
+      return {
+        currentDate: subtractMonthFromDate(state.currentDate)
+      };
   }
   return state;
 };

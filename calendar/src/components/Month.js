@@ -2,6 +2,10 @@ import React from "react";
 import Week from "./Week";
 import DayCell from "./DayCell";
 
+import { connect } from "react-redux";
+
+import { addInitialStateCell } from "../actions/actions";
+
 import {
   getNumberOfDaysInMonth,
   getFirstDayOfWeekOfMonth,
@@ -13,14 +17,10 @@ import {
 import { getEventsState } from "../helpers/state";
 
 const Month = props => {
-  const {
-    year,
-    month,
-    date,
-    eventsState,
-    typeView,
-    intersectionIsDetected
-  } = props;
+  const { year, month, eventsState, typeView, intersectionIsDetected } = props;
+
+  const date = props.currentDate;
+
   const numberOfDaysInMonth = getNumberOfDaysInMonth(year, month);
   const firstDayOfWeekOfMonth = getFirstDayOfWeekOfMonth(year, month);
   const lastDayOfWeekOfMonth = getLastDayOfWeekOfMonth(year, month);
@@ -48,6 +48,8 @@ const Month = props => {
       monthOfPreviousMonth,
       i
     );
+    const dayCellCode = `${yearOfPreviousMonth}${monthOfPreviousMonth}${i}`;
+    props.addInitialStateCell(dayCellCode);
     days.push(
       <DayCell
         className="notCurrent"
@@ -66,6 +68,9 @@ const Month = props => {
   for (let i = 1; i <= numberOfDaysInMonth; i++) {
     //const index = `${year}${month}`;
     const eventsStateCopy = getEventsState(eventsState, year, month, i);
+
+    const dayCellCode = `${year}${month}${i}`;
+    props.addInitialStateCell(dayCellCode);
     days.push(
       <DayCell
         className="current"
@@ -80,7 +85,7 @@ const Month = props => {
       />
     );
     if (days.length === 7) {
-      weeks.push(<Week key={weeks.length}>{days.slice(0)}</Week>);
+      weeks.push(<Week key={weeks.length}> {days.slice(0)} </Week>);
       days.length = 0;
     }
   }
@@ -88,13 +93,14 @@ const Month = props => {
   for (let i = 1; i <= 7 - lastDayOfWeekOfMonth; i++) {
     const yearOfNextMonth = nextMonthDate.getFullYear();
     const monthOfNextMonth = nextMonthDate.getMonth();
-    //const index = `${yearOfNextMonth}${monthOfNextMonth}`;
     const eventsStateCopy = getEventsState(
       eventsState,
       yearOfNextMonth,
       monthOfNextMonth,
       i
     );
+    const dayCellCode = `${yearOfNextMonth}${monthOfNextMonth}${i}`;
+    props.addInitialStateCell(dayCellCode);
     days.push(
       <DayCell
         className="notCurrent"
@@ -113,7 +119,23 @@ const Month = props => {
       days.length = 0;
     }
   }
-  return <tbody>{weeks}</tbody>;
+  return <tbody> {weeks} </tbody>;
 };
 
-export default Month;
+const mapStateToProps = state => {
+  return {
+    currentDate: state.date.currentDate
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addInitialStateCell: dayCellCode =>
+      dispatch(addInitialStateCell(dayCellCode))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Month);

@@ -1,25 +1,35 @@
 import React from "react";
 import AddEvent from "./AddEvent";
 import Events from "./Events";
+import { connect } from "react-redux";
 
-export default class DayCell extends React.Component {
+import { changeEventDate, toggleModal } from "../actions/actions";
+
+import {
+  TOGGLE_MODAL,
+  TOGGLE_MODAL_BY_DAY,
+  ADD_INITIAL_STATE_CELL
+} from "../actions/types";
+
+class DayCell extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, doNotToggle: false };
+    this.dayCellCode = `${props.year}${props.month}${props.dayInMonthNumber}`;
   }
-  toggleModal = e => {
-    this.setState({ showModal: !this.state.showModal }, () => {
-      this.setState({ doNotToggle: false });
-    });
+
+  toggleModal = () => {
+    this.props.toggleModal();
+    this.props.changeEventDate();
   };
 
   toggleModalByDay = () => {
-    if (!this.state.doNotToggle) {
-      this.setState({ showModal: true, doNotToggle: true });
+    if (!this.props.doNotToggle) {
+      this.props.toggleModalByDay();
     }
   };
 
   render() {
+    //console.log("Day cell", "props", this.props);
     const {
       eventsState,
       year,
@@ -36,9 +46,10 @@ export default class DayCell extends React.Component {
     } else {
       className = `dayCell ${this.props.className}`;
     }
+
     return (
       <td className={className} onClick={this.toggleModalByDay}>
-        <p>{dayInMonthNumber}</p>
+        <p> {dayInMonthNumber} </p>
         {typeView === "with" ? <Events eventsState={eventsState} /> : null}
         <button
           className="button is-small is-fullwidth"
@@ -46,8 +57,7 @@ export default class DayCell extends React.Component {
         >
           Add Event
         </button>
-
-        {this.state.showModal ? (
+        {this.props.dayCell.showModal ? (
           <React.Fragment>
             <div className="modal is-active">
               <div className="modal-background" />
@@ -57,7 +67,6 @@ export default class DayCell extends React.Component {
                   month={month}
                   dayInMonthNumber={dayInMonthNumber}
                   onAddEvent={onAddEvent}
-                  toggleModal={this.toggleModal}
                   intersectionIsDetected={intersectionIsDetected}
                 />
               </div>
@@ -72,3 +81,33 @@ export default class DayCell extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const dayCellCode = `${ownProps.year}${ownProps.month}${
+    ownProps.dayInMonthNumber
+  }`;
+  return {
+    showModal: state.dayCellReducer[dayCellCode].showModal,
+    doNotToggle: state.dayCellReducer[dayCellCode].doNotToggle,
+    dayCell: state.dayCellReducer[dayCellCode]
+  };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const dayCellCode = `${ownProps.year}${ownProps.month}${
+    ownProps.dayInMonthNumber
+  }`;
+  return {
+    changeEventDate: () => dispatch(changeEventDate("")),
+    toggleModal: () => dispatch({ type: TOGGLE_MODAL, dayCellCode }),
+    toggleModalByDay: () =>
+      dispatch({
+        type: TOGGLE_MODAL_BY_DAY,
+        dayCellCode
+      })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DayCell);

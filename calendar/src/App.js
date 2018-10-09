@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Provider, connect } from "react-redux";
+import store from "./store";
 import Month from "./components/Month";
 import ChangeMonth from "./components/ChangeMonth";
 import ShowTypeChecker from "./components/ShowTypeChecker";
@@ -18,87 +20,64 @@ class App extends Component {
     };
   }
 
-  onChangeDate = e => {
-    this.setState({
-      currentDate: e.target.valueAsDate
-    });
-  };
-
   onSelectNewViewType = newViewtype => {
     this.setState({
       typeView: newViewtype
     });
   };
 
-  onMonthForward = () => {
-    this.setState({
-      currentDate: addMonthToDate(this.state.currentDate)
-    });
-  };
+  // onEventsIntersectionDetection = (message, changeMessage) => {
+  //   this.setState({
+  //     eventsIntersectionIsDetected: changeMessage
+  //   });
+  // };
 
-  onMonthBackward = () => {
-    this.setState({
-      currentDate: subtractMonthFromDate(this.state.currentDate)
-    });
-  };
+  // onAddEvent = (
+  //   year,
+  //   month,
+  //   dayInMonthNumber,
+  //   eventMessage,
+  //   useTime,
+  //   eventStartTime,
+  //   eventEndTime,
+  //   annualEvent,
+  //   addIntersectedEvent
+  // ) => {
+  //   const events = addNewEventToCalendarState(
+  //     this.state.events,
+  //     year,
+  //     month,
+  //     dayInMonthNumber,
+  //     eventMessage,
+  //     useTime,
+  //     eventStartTime,
+  //     eventEndTime,
+  //     annualEvent,
+  //     this.props.onEventsIntersectionDetection,
+  //     addIntersectedEvent
+  //   );
 
-  onEventsIntersectionDetection = (message, changeMessage) => {
-    this.setState({
-      eventsIntersectionIsDetected: changeMessage
-    });
-  };
-
-  onAddEvent = (
-    year,
-    month,
-    dayInMonthNumber,
-    eventMessage,
-    useTime,
-    eventStartTime,
-    eventEndTime,
-    annualEvent,
-    addIntersectedEvent
-  ) => {
-    const events = addNewEventToCalendarState(
-      this.state.events,
-      year,
-      month,
-      dayInMonthNumber,
-      eventMessage,
-      useTime,
-      eventStartTime,
-      eventEndTime,
-      annualEvent,
-      this.onEventsIntersectionDetection,
-      addIntersectedEvent
-    );
-
-    this.setState({
-      events
-    });
-  }; // end onAddEvent
+  //   this.setState({
+  //     events
+  //   });
+  // }; // end onAddEvent
 
   render() {
+    const currentDate = this.props.currentDate;
+
     return (
       <div className="App">
         <ShowTypeChecker
           defaultType={this.state.typeView}
           onSelectNewViewType={this.onSelectNewViewType}
         />
-        <ChangeMonth
-          onMonthBackward={this.onMonthBackward}
-          onMonthForward={this.onMonthForward}
-          currentDate={this.state.currentDate}
-        />
-        <SelectDate
-          date={this.state.currentDate}
-          onChangeDate={this.onChangeDate}
-        />
+        <ChangeMonth />
+        <SelectDate />
         <table className="table is-bordered is-narrow is-fullwidth">
           <Month
-            year={this.state.currentDate.getFullYear()}
-            month={this.state.currentDate.getMonth()}
-            date={this.state.currentDate}
+            year={currentDate.getFullYear()}
+            month={currentDate.getMonth()}
+            date={currentDate}
             onAddEvent={this.onAddEvent}
             eventsState={this.state.events}
             typeView={this.state.typeView}
@@ -110,4 +89,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    currentDate: state.date.currentDate
+  };
+};
+
+export default connect(mapStateToProps)(App);
