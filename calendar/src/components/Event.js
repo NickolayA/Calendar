@@ -7,13 +7,15 @@ const Event = props => {
   if (startTime && endTime === undefined) {
     event = (
       <a className="panel-block event onlyStartTime">
-        {startTime}: {eventMessage}
+        {" "}
+        {startTime}: {eventMessage}{" "}
       </a>
     );
   } else if (startTime && endTime) {
     event = (
       <a className="panel-block event rangeTime">
-        {startTime} - {endTime}: {eventMessage}
+        {" "}
+        {startTime} - {endTime}: {eventMessage}{" "}
       </a>
     );
   } else {
@@ -23,7 +25,7 @@ const Event = props => {
           className="panel-block event annualEvents is-danger"
           title="annual event"
         >
-          {eventMessage}
+          {eventMessage}{" "}
         </a>
       );
     } else {

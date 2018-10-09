@@ -10,13 +10,6 @@ import { addMonthToDate, subtractMonthFromDate } from "./helpers/datetime";
 import { addNewEventToCalendarState } from "./helpers/state";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      typeView: "without"
-    };
-  }
-
   onSelectNewViewType = newViewtype => {
     this.setState({
       typeView: newViewtype
@@ -28,10 +21,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <ShowTypeChecker
-          defaultType={this.state.typeView}
-          onSelectNewViewType={this.onSelectNewViewType}
-        />
+        <ShowTypeChecker />
         <ChangeMonth />
         <SelectDate />
         <table className="table is-bordered is-narrow is-fullwidth">
@@ -39,7 +29,6 @@ class App extends Component {
             year={currentDate.getFullYear()}
             month={currentDate.getMonth()}
             date={currentDate}
-            typeView={this.state.typeView}
           />
         </table>
       </div>
