@@ -3,14 +3,10 @@ import AddEvent from "./AddEvent";
 import Events from "./Events";
 import { connect } from "react-redux";
 
-import { changeEventDate, toggleModal } from "../actions/actions";
+import { changeEventDate } from "../actions/actions";
 import { getEventsState } from "../helpers/state";
 
-import {
-  TOGGLE_MODAL,
-  TOGGLE_MODAL_BY_DAY,
-  ADD_INITIAL_STATE_CELL
-} from "../actions/types";
+import { TOGGLE_MODAL, TOGGLE_MODAL_BY_DAY } from "../actions/types";
 
 class DayCell extends React.Component {
   constructor(props) {

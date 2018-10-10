@@ -15,7 +15,7 @@ import {
 } from "../helpers/datetime";
 
 const Month = props => {
-  const { year, month, eventsState, typeView } = props;
+  const { year, month, typeView } = props;
 
   const date = props.currentDate;
 

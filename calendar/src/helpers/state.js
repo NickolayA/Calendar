@@ -7,7 +7,7 @@ export const getEventsState = (eventsState, year, month, dayInMonthNumber) => {
 
   if ("annualEvents" in eventsState) {
     for (let firstAnnualEventYear in eventsState["annualEvents"]) {
-      if (parseInt(firstAnnualEventYear) <= parseInt(year)) {
+      if (parseInt(firstAnnualEventYear, 10) <= parseInt(year, 10)) {
         if (month in eventsState["annualEvents"][firstAnnualEventYear]) {
           if (
             dayInMonthNumber in

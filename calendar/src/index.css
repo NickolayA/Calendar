@@ -57,7 +57,9 @@ td.dayCell {
   padding: 0 0 0 2px;
 }
 
-
+.table td {
+  padding: 0;
+}
 
 
 .annualEvents {

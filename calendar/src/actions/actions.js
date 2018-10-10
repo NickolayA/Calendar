@@ -12,11 +12,7 @@ import {
   INVERT_MESSAGE_IS_VALID
 } from "../actions/types";
 
-import {
-  TOGGLE_MODAL,
-  TOGGLE_MODAL_BY_DAY,
-  ADD_INITIAL_CELL_STATE
-} from "../actions/types";
+import { TOGGLE_MODAL, ADD_INITIAL_CELL_STATE } from "../actions/types";
 
 import { ADD_EVENT } from "../actions/types";
 

@@ -79,8 +79,9 @@ const addEventReducer = (state = initialState, action) => {
         ...state,
         validationMessage: action.newValidationMessage
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default addEventReducer;

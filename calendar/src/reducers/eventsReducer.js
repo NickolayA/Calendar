@@ -3,7 +3,10 @@ import { ADD_EVENT, CHANGE_ADD_INTERSECTED_EVENT } from "../actions/types";
 import { addNewEventToCalendarState } from "../helpers/state";
 
 const eventsReducer = (
-  state = { addIntersectedEvent: false, eventIntersectionDetected: false },
+  state = {
+    addIntersectedEvent: false,
+    eventIntersectionDetected: false
+  },
   action
 ) => {
   switch (action.type) {
@@ -26,8 +29,9 @@ const eventsReducer = (
         state.addIntersectedEvent
       );
       return newEvents;
+    default:
+      return state;
   }
-  return state;
 };
 
 export default eventsReducer;

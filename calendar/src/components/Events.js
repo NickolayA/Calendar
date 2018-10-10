@@ -36,11 +36,6 @@ class Events extends React.Component {
     let commonTimes = [];
     if (eventsState) {
       if ("currentEvents" in eventsState) {
-        // console.log(
-        //   eventsState,
-        //   eventsState["currentEvents"],
-        //   "extractEventsWithTime"
-        // );
         if (
           "eventStartTime" in eventsState["currentEvents"] &&
           "rangeTime" in eventsState["currentEvents"]

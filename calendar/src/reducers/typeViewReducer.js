@@ -11,8 +11,9 @@ const typeViewReducer = (
         ...state,
         typeView: action.newType
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default typeViewReducer;

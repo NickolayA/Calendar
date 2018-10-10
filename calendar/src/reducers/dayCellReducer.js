@@ -32,8 +32,9 @@ const dayCellReducer = (state = {}, action) => {
           doNotToggle: true
         }
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default dayCellReducer;

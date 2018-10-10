@@ -20,8 +20,9 @@ const dateReducer = (
       return {
         currentDate: subtractMonthFromDate(state.currentDate)
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default dateReducer;

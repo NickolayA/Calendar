@@ -70,7 +70,6 @@ class AddEvent extends React.Component {
         eventStart,
         eventEnd,
         annualEvent,
-        // this.props.onEventsIntersectionDetection,
         addIntersectedEvent
       );
 
@@ -87,7 +86,6 @@ class AddEvent extends React.Component {
         eventStart,
         eventEnd,
         annualEvent,
-        // this.props.onEventsIntersectionDetection,
         addIntersectedEvent
       );
     }
@@ -97,10 +95,6 @@ class AddEvent extends React.Component {
     this.props.setResetEventMessageAdditionSuccess(
       SET_MESSAGE_ADDITION_SUCCESS
     );
-
-    // this.setState({
-    //   eventMessageAdditionSuccess: true
-    // });
   };
 
   render() {
@@ -307,8 +301,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           addIntersectedEvent
           // onEventsIntersectionDetection
         )
-      ),
-    onEventsIntersectionDetection: () => dispatch({ type: "Hello world" })
+      )
   };
 };
 
