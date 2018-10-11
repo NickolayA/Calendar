@@ -25,7 +25,6 @@ const initialState = {
 };
 
 const addEventReducer = (state = initialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case SET_MESSAGE_ADDITION_SUCCESS:
       return {
